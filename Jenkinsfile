@@ -1,40 +1,34 @@
-pipeline {
+pipeline {  
     agent any
+    triggers {
+    cron('H/2 * * * *')
+    }
     stages {
+
+        stage("Parallel") {
+        steps {
+          parallel (
+          "Taskone" : { echo 'Thsi is task One'}, "Tasktwo" : { echo 'This is task two'}
+
         stage('Build') {
             steps {
-                dir('C:/Jenkins/190624_test.bat') {
-                    /* execute commands in the scripts directory */
+            bat 'C:/Jenkins/test.bat'
                 }
             }
-        }
-        stage('Test') {
+         stage('Test') {
             steps {
-                dir('C:/Jenkins/190624_test.bat') {
-                    /* execute commands in the scripts directory */
+            bat 'C:/Jenkins/test.bat'
                 }
             }
-        }
-      stage('Package') {
+        stage('Package') {
             steps {
-                dir('C:/Jenkins/190624_test.bat') {
-                    /* execute commands in the scripts directory */
+            bat 'C:/Jenkins/test.bat'
                 }
             }
-        }
         stage('Deploy') {
             steps {
-                dir('C:/Jenkins/190624_test.bat') {
-                    /* execute commands in the scripts directory */
+            bat 'C:/Jenkins/test.bat'
                 }
             }
-        }
-        stage('Poll_auto_trigger') {
-            steps {
-                dir('C:/Jenkins/190624_test.bat') {
-                    /* execute commands in the scripts directory */
-                }
-            }
-        }
-    }
+       }      
 }

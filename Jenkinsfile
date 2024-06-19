@@ -29,5 +29,12 @@ pipeline {
                 }
             }
         }
+        stage('HAHA_auto_trigger') {
+            steps {
+                dir('C:/Jenkins/190624_test.bat') {
+                    /* execute commands in the scripts directory */
+                }
+            }
+        }
     }
 }

@@ -1,34 +1,47 @@
 pipeline {  
     agent any
     triggers {
-    cron('H/2 * * * *')
+        cron('H/2 * * * *')
     }
     stages {
-
         stage("Parallel") {
-        steps {
-          parallel (
-          "Taskone" : { echo 'Thsi is task One'}, "Tasktwo" : { echo 'This is task two'}
-
+            steps {
+                parallel(
+                    "Taskone": {
+                        echo 'This is task One'
+                    },
+                    "Tasktwo": {
+                        echo 'This is task two'
+                    }
+                )
+            }
+        }
         stage('Build') {
             steps {
-            bat 'C:/Jenkins/test.bat'
-                }
+                bat 'C:/Jenkins/test.bat'
             }
-         stage('Test') {
+        }
+        stage('Test') {
             steps {
-            bat 'C:/Jenkins/test.bat'
-                }
+                bat 'C:/Jenkins/test.bat'
             }
+        }
         stage('Package') {
             steps {
-            bat 'C:/Jenkins/test.bat'
-                }
+                bat 'C:/Jenkins/test.bat'
             }
+        }
         stage('Deploy') {
             steps {
-            bat 'C:/Jenkins/test.bat'
-                }
+                bat 'C:/Jenkins/test.bat'
             }
-       }      
+        }
+    }
+    post {
+        failure {
+            mail to: 'angchiahong.w@gmail.com',
+                 subject: "Pipeline has failed: ${currentBuild.fullDisplayName}",
+                 body: "Error in ${env.BUILD_URL}"
+        }
+    }
 }
